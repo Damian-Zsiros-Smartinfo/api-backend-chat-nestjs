@@ -10,6 +10,7 @@ import { User } from './auth/auth.entity';
 import { OtpCode } from './auth/otpCode.entity';
 import { Image } from './chat/image.entity';
 import { ConfigModule } from '@nestjs/config';
+import { PasswordRecoverModule } from './password-recover/password-recover.module';
 
 @Module({
   imports: [
@@ -30,6 +31,7 @@ import { ConfigModule } from '@nestjs/config';
     }),
     AuthModule,
     ChatModule,
+    PasswordRecoverModule,
   ],
   controllers: [AppController],
   providers: [AppService],
