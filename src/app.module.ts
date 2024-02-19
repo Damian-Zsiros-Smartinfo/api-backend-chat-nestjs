@@ -10,7 +10,8 @@ import { User } from './auth/auth.entity';
 import { OtpCode } from './auth/otpCode.entity';
 import { Image } from './chat/image.entity';
 import { ConfigModule } from '@nestjs/config';
-import { PasswordRecoverModule } from './password-recover/password-recover.module';
+import { PasswordRecoverModule } from './auth/password-recover/password-recover.module';
+import { TypeOrmConfigModule } from './typeorm/typeorm.module';
 
 @Module({
   imports: [
@@ -32,6 +33,7 @@ import { PasswordRecoverModule } from './password-recover/password-recover.modul
     AuthModule,
     ChatModule,
     PasswordRecoverModule,
+    TypeOrmConfigModule,
   ],
   controllers: [AppController],
   providers: [AppService],
