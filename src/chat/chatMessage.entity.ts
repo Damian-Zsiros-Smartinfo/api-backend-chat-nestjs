@@ -21,8 +21,8 @@ export class ChatMessage extends BaseEntity {
   @Column('text')
   message: string;
 
-  @Column()
-  name_sender: string;
+  @Column({ nullable: false, default: 'Damian' })
+  nameSender: string;
 
   @CreateDateColumn({ name: 'created_at', type: 'timestamp' })
   createdAt: Date;

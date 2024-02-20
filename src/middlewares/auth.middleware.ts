@@ -1,6 +1,6 @@
-import { User } from '../auth/auth.entity';
 import { NextFunction, Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
+import { UserModel } from 'src/user/infraestructura/modelos/user.model';
 
 export async function verifyToken(
   req: Request,
@@ -28,13 +28,13 @@ export async function verifyToken(
     const userInfoToken = jwt.verify(
       authHeaderString,
       process.env.NEXT_PUBLIC_JWT_SECRET_KEY,
-    ) as User;
+    ) as UserModel;
     if (!userInfoToken.id) {
       res.status(401).json({ message: 'Token is not valid' });
     }
     const userExists =
       (
-        await User.getRepository().findBy({
+        await UserModel.getRepository().findBy({
           id: userInfoToken.id,
         })
       ).length > 0;

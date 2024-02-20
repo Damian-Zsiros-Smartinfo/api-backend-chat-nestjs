@@ -4,9 +4,8 @@ import { AppModule } from './app.module';
 import * as http from 'http';
 import { Server } from 'socket.io';
 import { getChatMessages } from './services/chatService';
-import { ChatMessage } from './chat/chatMessage.entity';
-import { Image } from './chat/image.entity';
-import { ChatMessages } from './models/ChatMessage';
+import { Image } from './chat/infraestructura/modelos/Image';
+import { ChatMessages } from './chat/infraestructura/modelos/ChatMessage';
 async function bootstrap() {
   const PORT = process.env.PORT || 4500;
   const app = await NestFactory.create(AppModule);
@@ -32,10 +31,10 @@ async function bootstrap() {
     socket.broadcast.emit('server:loadmessages', await getChatMessages());
     socket.on('server:addMessage', async function (data) {
       try {
-        const chatMessageNew = new ChatMessage();
+        const chatMessageNew = new ChatMessages();
         chatMessageNew.message = data.text;
         chatMessageNew.id_chat = 1;
-        chatMessageNew.name_sender = data.actor;
+        chatMessageNew.nameSender = data.actor;
         await chatMessageNew.save();
         const chatMessageAdded = chatMessageNew;
         const imagesFile: {
@@ -64,7 +63,7 @@ async function bootstrap() {
       const messagesRepository = ChatMessages.getRepository();
       const message =
         (await messagesRepository.findOneBy({ id: parseInt(messageId) })) ||
-        new ChatMessage();
+        new ChatMessages();
       message.message = messageEdited;
       await messagesRepository.save(message);
 
@@ -72,7 +71,7 @@ async function bootstrap() {
     });
 
     socket.on('server:deleteMessage', async function (data) {
-      const messagesRepository = ChatMessage.getRepository();
+      const messagesRepository = ChatMessages.getRepository();
       await messagesRepository.delete({ id: parseInt(data) });
 
       socket.broadcast.emit('server:loadmessages', await getChatMessages());

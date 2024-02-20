@@ -1,25 +1,25 @@
-import { ChatMessage } from '../chat/chatMessage.entity';
-import { Image as ImageEntity } from '../chat/image.entity';
+import { ChatMessages } from 'src/chat/infraestructura/modelos/ChatMessage';
+import { Image as ImageEntity } from '../chat/infraestructura/modelos/Image';
 export async function getChatMessages() {
   try {
-    const chat_messages = await ChatMessage.find();
+    const chat_messages = await ChatMessages.find();
 
     if (!chat_messages) throw new Error();
 
     const messagesWithImagesPromises = chat_messages.map(async (message) => {
-      const messageInfo: ChatMessage = message;
+      const messageInfo: ChatMessages = message;
 
-      const images_messages = await ImageEntity.find({
-        where: { idMessage: { id: messageInfo.id } },
+      const images_messages = await ImageEntity.getRepository().find({
+        where: { idMessage: messageInfo.id },
         relations: ['idMessage'],
       });
 
       return {
         id: messageInfo.id,
-        actor: messageInfo.name_sender,
+        actor: messageInfo.nameSender,
         text: messageInfo.message,
         images: images_messages,
-        created_at: messageInfo.createdAt || '',
+        created_at: messageInfo.created_at || '',
       };
     });
 

@@ -1,15 +1,16 @@
+import { InterfaceChatEntity } from 'src/chat/dominio/entities/chat.entity';
 import { Column } from 'typeorm';
 import { PrimaryGeneratedColumn } from 'typeorm';
 import { Entity } from 'typeorm';
 
 @Entity()
-export class Chat {
+export class Chat implements InterfaceChatEntity {
   @PrimaryGeneratedColumn('rowid')
   id: number;
 
-  @Column('string')
+  @Column()
   name: string;
 
-  @Column('timestamp with local time zone')
+  @Column()
   created_at: Date;
 }
