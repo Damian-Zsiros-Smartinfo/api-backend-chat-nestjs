@@ -14,7 +14,7 @@ interface UserVerify {
   password: string;
 }
 
-@Controller('auth/login')
+@Controller('auth/login/sadsad')
 export class LoginController {
   @Post()
   async login(@Body() body: { email: string; password: string }) {

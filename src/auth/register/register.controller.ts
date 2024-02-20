@@ -8,7 +8,7 @@ import {
 import { User } from '../auth.entity';
 import * as bcrypt from 'bcryptjs';
 
-@Controller('auth/register')
+@Controller('auth/registerdasdas')
 export class RegisterController {
   @Post()
   async register(

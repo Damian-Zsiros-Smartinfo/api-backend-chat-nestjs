@@ -6,12 +6,14 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ChatModule } from './chat/chat.module';
 import { Chat } from './chat/chat.entity';
 import { ChatMessage } from './chat/chatMessage.entity';
+import { UserModel } from './user/infraestructura/modelos/user.model';
 import { User } from './auth/auth.entity';
 import { OtpCode } from './auth/otpCode.entity';
 import { Image } from './chat/image.entity';
 import { ConfigModule } from '@nestjs/config';
 import { PasswordRecoverModule } from './auth/password-recover/password-recover.module';
 import { TypeOrmConfigModule } from './typeorm/typeorm.module';
+import { UserModule } from './user/user.module';
 
 @Module({
   imports: [
@@ -28,12 +30,13 @@ import { TypeOrmConfigModule } from './typeorm/typeorm.module';
       password: process.env.SUPABASE_DATABASE_PASSWORD || 'sbj2WCKdeiuUhhWG',
       database: process.env.SUPABASE_DATABASE_NAME || 'postgres',
       synchronize: true,
-      entities: [Chat, ChatMessage, Image, User, OtpCode],
+      entities: [Chat, ChatMessage, Image, User, OtpCode, UserModel],
     }),
     AuthModule,
     ChatModule,
     PasswordRecoverModule,
     TypeOrmConfigModule,
+    UserModule,
   ],
   controllers: [AppController],
   providers: [AppService],
